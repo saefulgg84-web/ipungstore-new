@@ -12,6 +12,7 @@ body { background: #111; color: white; }
 .drawer.open { right: 0; }
 .social-btn { display:block; padding:12px; border-radius:8px; background:#25D366; color:white; text-align:center; text-decoration:none; }
 .welcome-box { background:#181818; border:1px solid #333; padding:18px; border-radius:8px; margin-top:18px; }
+.back-btn { background:#444; border:1px solid #666; }
 </style>
 </head>
 <body>
@@ -42,36 +43,42 @@ body { background: #111; color: white; }
 <div class="modal fade" id="payModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content bg-dark text-white">
-      <div class="modal-header"><h5 id="payTitle"></h5></div>
+      <div class="modal-header d-flex justify-content-between">
+        <h5 id="payTitle"></h5>
+        <button class="btn-close btn-close-white" onclick="closePayModal()"></button>
+      </div>
       <div class="modal-body">
         <p>Silahkan scan QRIS untuk melakukan pembayaran:</p>
         <img id="qrisImg" class="w-100 rounded mb-3">
         <p class="text-warning">Setelah transfer, klik tombol di bawah untuk kirim bukti ke admin.</p>
       </div>
-      <div class="modal-footer">
+      <div class="modal-footer d-flex flex-column gap-2">
         <a id="waLink" class="btn btn-success w-100" target="_blank">Kirim Bukti ke WhatsApp</a>
+        <button class="btn back-btn w-100" onclick="closePayModal()">Kembali ke Dashboard</button>
       </div>
     </div>
   </div>
 </div>
 
 <script>
-function toggleDrawer(){ document.getElementById("drawer").classList.toggle("open"); }
+function toggleDrawer(){
+  document.getElementById("drawer").classList.toggle("open");
+}
 
-// GAMBAR PRODUK FINAL + PRODUK LIST
+// GAMBAR PRODUK + LIST PRODUK FINAL
 const imgNew = "https://img1.pixhost.to/images/10698/668955099_lyrra-md.jpg";
 
 const products = [
-  {id:1, name:'PANEL RAM 1GB', price:1000, img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
-  {id:2, name:'PANEL RAM 2GB', price:2000, img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
-  {id:3, name:'PANEL RAM 3GB', price:3000, img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
-  {id:4, name:'PANEL RAM 4GB', price:4000, img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
-  {id:5, name:'PANEL RAM 5GB', price:5000, img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
-  {id:6, name:'PANEL RAM 6GB', price:6000, img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
-  {id:7, name:'PANEL RAM 7GB', price:7000, img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
-  {id:8, name:'PANEL RAM 8GB', price:8000, img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
-  {id:9, name:'PANEL RAM 9GB', price:9000, img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
-  {id:10, name:'PANEL RAM UNLIMITED', price:10000, img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
+  {id:1, name:'PANEL RAM 1 GB', price:1000, img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
+  {id:2, name:'PANEL RAM 2 GB', price:2000, img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
+  {id:3, name:'PANEL RAM 3 GB', price:3000, img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
+  {id:4, name:'PANEL RAM 4 GB', price:4000, img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
+  {id:5, name:'PANEL RAM 5 GB', price:5000, img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
+  {id:6, name:'PANEL RAM 6 GB', price:6000, img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
+  {id:7, name:'PANEL RAM 7 GB', price:7000, img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
+  {id:8, name:'PANEL RAM 8 GB', price:8000, img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
+  {id:9, name:'PANEL RAM 9 GB', price:9000, img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
+  {id:11, name:'UNLIMITED RAM', price:10000, img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
 ];
 
 const box = document.getElementById("productList");
@@ -91,12 +98,18 @@ function pay(id){
   const p = products.find(x=>x.id===id);
   document.getElementById("payTitle").innerHTML = p.name;
   document.getElementById("qrisImg").src = p.qris;
-  const waLink = document.getElementById("waLink");
-  waLink.href = `https://wa.me/6283840810226?text=${encodeURIComponent("MIN SAYA MAU KIRIM BUKTI TRANSFER UNTUK PEMBELIAN "+p.name)}`;
+  document.getElementById("waLink").href = 
+    `https://wa.me/6283840810226?text=${encodeURIComponent("MIN SAYA MAU KIRIM BUKTI TRANSFER UNTUK PEMBELIAN "+p.name)}`;
   new bootstrap.Modal(document.getElementById("payModal")).show();
+}
+
+// 🔥 tombol kembali ke dashboard (tidak logout)
+function closePayModal(){
+  const modal = bootstrap.Modal.getInstance(document.getElementById("payModal"));
+  modal.hide();
 }
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-  </html>
+</html>
