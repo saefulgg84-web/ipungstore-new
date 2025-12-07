@@ -1,600 +1,94 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>IPUNGG SHOP</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
-
-  <style>
-:root{
-  --gradient: linear-gradient(135deg,#ff3d3d,#ff5e5e,#ff1e1e,#d40000);
-  --bg: #150606;
-  --card: rgba(255,0,0,0.08);
-  --border: rgba(255,50,50,0.25);
-  --muted: white;
-  --accent: #ff4d4d;
-  --radius:20px;
-  font-family:"Inter",system-ui;
-}
-
-    body{
-      margin:0;
-      background: radial-gradient(circle at top, #232946 0%, #0e1121 70%);
-      color:white;
-      overflow-x:hidden;
-    }
-
-    *{box-sizing:border-box; scroll-behavior:smooth;}
-
-
-    #welcome{
-      position:fixed;
-      inset:0;
-      background:radial-gradient(circle at top,#2b2f4b,#0e1121 80%);
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      z-index:2000;
-      text-align:center;
-      padding:20px;
-    }
-
-    #typingText{
-      font-size:32px;
-      font-weight:800;
-      background:var(--gradient);
-      -webkit-background-clip:text;
-      color:transparent;
-      margin-bottom:14px;
-      white-space:pre-wrap;
-      min-height:40px;
-    }
-
-    #welcome button{
-      margin-top:20px;
-      padding:14px 40px;
-      font-size:17px;
-      border:none;
-      border-radius:16px;
-      cursor:pointer;
-      font-weight:700;
-      color:white;
-      background:var(--gradient);
-      box-shadow:0 10px 30px white(75,90,255,0.45);
-      transition:.25s;
-    }
-
-    #welcome button:hover{ transform:scale(1.07); }
-    #welcome button:active{ transform:scale(.93); }
-  
-
-    header{
-      position:sticky;
-      top:0;
-      z-index:998;
-      padding:18px 26px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      background:black(20,22,35,0.65);
-      backdrop-filter:blur(18px);
-      border-bottom:1px solid bla(255,255,255,0.08);
-    }
-
-    header h1{
-      margin:0;
-      font-size:22px;
-      font-weight:800;
-      background:var(--gradient);
-      -webkit-background-clip:text;
-      color:transparent;
-    }
-
-    header p{
-      margin:0 0 0 12px;
-      font-size:13px;
-      color:var(--muted);
-    }
-
-    .container{
-      max-width:1200px;
-      margin:40px auto;
-      padding:0 24px;
-    }
-
-#musicPlayer{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:14px;
-  margin:20px auto;
-  width:100%;
-}
-
-#playBtn{
-  width:48px;
-  height:48px;
-  border-radius:50%;
-  border:none;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  cursor:pointer;
-  background:var(--gradient);
-}
-
-#playBtn svg{
-  width:24px;
-  height:24px;
-  fill:white;
-}
-
-#progressBar{
-  flex:1;
-  height:10px;              
-  background:rgba(255,255,255,0.18);
-  border-radius:50px;         /* nuxoffc */
-  cursor:pointer;
-  position:relative;
-  overflow:hidden;
-}
-
-#progressFill{
-  position:absolute;
-  inset:0;
-  width:0%;
-  height:100%;
-  background:var(--gradient);
-  border-radius:50px;         /* NuxOffc */
-  pointer-events:none;
-  transition:width 0.15s linear;
-}
-
-#musicTitle{
-  font-size:15px;
-  font-weight:700;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-    .list{
-      display:grid;
-      grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
-      gap:24px;
-    }
-
-    .card{
-      background:var(--card);
-      padding:16px;
-      border-radius:var(--radius);
-      border:1px solid var(--border);
-      backdrop-filter:blur(22px);
-      box-shadow:0 15px 40px rgba(0,0,0,0.25);
-      transition:0.35s ease;
-      transform:translateY(20px);
-      opacity:0;
-    }
-
-    .card.visible{
-      transform:translateY(0);
-      opacity:1;
-    }
-
-    .card:hover{
-      transform:translateY(-6px);
-      box-shadow:0 20px 50px rgba(0,0,0,0.35);
-      border-color:rgba(255,255,255,0.25);
-    }
-
-    .thumb{
-      width:100%;
-      height:180px;
-      border-radius:14px;
-      object-fit:cover;
-      border:1px solid rgba(255,255,255,0.12);
-      margin-bottom:14px;
-    }
-
-    .title{ font-weight:700; font-size:17px; margin:0 0 5px; }
-    .desc{ font-size:13px; color:var(--muted); margin:0; }
-    .price{
-      margin-top:10px;
-      font-weight:700;
-      font-size:15px;
-      background:var(--gradient);
-      -webkit-background-clip:text;
-      color:transparent;
-    }
-
-    .btn{
-      width:100%;
-      padding:12px;
-      margin-top:16px;
-      border-radius:14px;
-      border:none;
-      cursor:pointer;
-      font-weight:700;
-      color:white;
-      background:var(--gradient);
-      box-shadow:0 10px 30px white(75,90,255,0.45);
-      transition:0.2s ease;
-    }
-
-    .btn:hover{ transform:scale(1.06); }
-    .btn:active{ transform:scale(.95); }
-
-    footer{
-      margin-top:50px;
-      text-align:center;
-      padding:16px;
-      color:var(--muted);
-      background:rgba(20,22,35,0.55);
-      backdrop-filter:blur(18px);
-      border-top:1px solid rgba(255,255,255,0.08);
-    }
-
-
-    #drawer{
-      position:fixed;
-      top:0;
-      right:-260px;
-      width:260px;
-      background:rgba(15,16,30,0.92);
-      border-left:1px solid rgba(255,255,255,0.12);
-      backdrop-filter:blur(22px);
-      box-shadow:-5px 0 25px rgba(0,0,0,0.35);
-      padding:20px;
-      transition:0.35s ease;
-      z-index:999;
-      border-radius:0 0 0 16px;
-    }
-
-    #drawer.open{ right:0; }
-
-    .drawer-header{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      margin-bottom:18px;
-    }
-
-    .drawer-title{
-      font-size:19px;
-      font-weight:700;
-    }
-
-    .drawer-close{
-      background:#ffffff1a;
-      padding:6px 10px;
-      border-radius:8px;
-      cursor:pointer;
-      font-size:15px;
-    }
-
-    .social-btn{
-      width:100%;
-      padding:12px;
-      background:rgba(255,255,255,0.1);
-      border:1px solid rgba(255,255,255,0.2);
-      border-radius:14px;
-      display:flex;
-      align-items:center;
-      gap:10px;
-      color:white;
-      text-decoration:none;
-      margin-bottom:12px;
-      transition:0.25s ease;
-    }
-
-    .social-btn:hover{ background:rgba(255,255,255,0.18); }
-
-    .hamburger{
-      width:30px;
-      height:22px;
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-      cursor:pointer;
-    }
-
-    .line{
-      height:4px;
-      border-radius:4px;
-      background:white;
-      opacity:.85;
-    }
-
-    .modal-backdrop{
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,0.65);
-      backdrop-filter:blur(10px);
-      display:none;
-      align-items:center;
-      justify-content:center;
-      z-index:1000;
-      padding:20px;
-    }
-
-    .modal{
-      background:rgba(22,25,39,0.85);
-      border:1px solid rgba(255,255,255,0.15);
-      border-radius:20px;
-      padding:20px;
-      width:100%;
-      max-width:420px;
-      backdrop-filter:blur(20px);
-    }
-
-    .close{
-      background:#ffffff1a;
-      padding:10px 14px;
-      border-radius:10px;
-      cursor:pointer;
-    }
-
-    .modal-footer{
-      display:flex;
-      gap:10px;
-      margin-top:14px;
-    }
-
-    .wa-btn{
-      flex:1;
-      background:red;
-      padding:12px;
-      border-radius:14px;
-      color:white;
-      text-align:center;
-      text-decoration:none;
-      font-weight:700;
-    }
-
-    .qris{
-      width:100%;
-      border-radius:16px;
-      margin-top:14px;
-      border:1px solid rgba(255,255,255,0.15);
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IPUNGG SHOP</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<style>
+body { background: #111; color: white; }
+.card { background: #1c1c1c; border: 1px solid #333; }
+.drawer { position: fixed; top: 0; right: -300px; width: 300px; height: 100%; background:#181818; padding:20px; transition:.4s; z-index:999; }
+.drawer.open { right: 0; }
+.social-btn { display:block; padding:12px; border-radius:8px; background:#25D366; color:white; text-align:center; text-decoration:none; }
+</style>
 </head>
 <body>
 
-<div id="welcome">
-  <div id="typingText"></div>
-  <button id="nextBtn">NEXT</button>
+<nav class="navbar bg-dark px-3">
+  <span class="navbar-brand text-white fw-bold">TOKO PANEL</span>
+  <button class="btn btn-outline-light" onclick="toggleDrawer()">≡</button>
+</nav>
+
+<div class="container mt-4">
+  <div class="row" id="productList"></div>
 </div>
 
-<header>
-  <div style="display:flex;align-items:center;gap:10px;">
-    <h1>IPUNGG SHOP</h1>
-    <p>PANEL PTERODACTYL MURAH AMAN TERPERCAYA</p>
-  </div>
-
-  <div class="hamburger" id="openDrawer">
-    <div class="line"></div><div class="line"></div><div class="line"></div>
-  </div>
-</header>
-
-
-<div id="drawer">
-  <div class="drawer-header">
-    <div class="drawer-title">Sosial Media</div>
-    <div class="drawer-close" id="closeDrawer">✕</div>
-  </div>
-
-<a class="social-btn" href="https://wa.me/6283840810226" target="_blank">
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
-    <path d="M20.52 3.48A11.86 11.86 0 0 0 12.04 0C5.45 0 .1 5.34.1 11.93c0 2.1.55 4.15 1.6 5.97L0 24l6.3-1.64a12 12 0 0 0 5.73 1.46h.01c6.59 0 11.94-5.35 11.94-11.94 0-3.19-1.24-6.2-3.46-8.4ZM12.04 21.3a9.33 9.33 0 0 1-4.75-1.3l-.34-.2-3.74.97 1-3.64-.22-.37a9.27 9.27 0 0 1-1.42-4.9c0-5.15 4.19-9.33 9.33-9.33 2.49 0 4.83.97 6.6 2.74a9.27 9.27 0 0 1 2.73 6.6c0 5.15-4.18 9.33-9.33 9.33Zm5.12-6.98c-.28-.14-1.65-.82-1.9-.91-.26-.1-.45-.14-.64.14-.19.28-.74.91-.9 1.1-.17.19-.33.21-.61.07-.28-.14-1.18-.43-2.25-1.37-.83-.74-1.39-1.64-1.55-1.92-.16-.28-.02-.43.12-.57.12-.12.28-.33.42-.49.14-.16.19-.28.28-.47.09-.19.05-.35-.02-.49-.07-.14-.64-1.54-.88-2.11-.23-.55-.47-.48-.64-.49h-.55c-.19 0-.49.07-.75.35-.26.28-.98.96-.98 2.32 0 1.36 1 2.67 1.14 2.85.14.19 1.96 2.98 4.74 4.09 2.78 1.12 2.78.75 3.29.7.5-.05 1.64-.67 1.87-1.32.23-.65.23-1.21.16-1.32-.07-.12-.25-.19-.53-.33Z"/>
-  </svg>
-  WhatsApp
-</a>
-
-  <a class="social-btn" href="https://t.me/ipung_brye" target="_blank">
-    <svg width="24" fill="white" viewBox="0 0 24 24"><path d="M22 4.01 2.55 11.2c-.83.33-.78 1.53.07 1.79l4.67 1.43 1.78 5.6c.27.86 1.35 1.12 1.96.47l2.77-2.86 4.64 3.38c.8.59 1.94.15 2.2-.82L23.98 5c.27-1.04-.72-1.93-1.98-1Z"/></svg>
-    Telegram
-  </a>
-
-  <a class="social-btn" href="https://www.tiktok.com/@ipunggg26?_r=1&_t=ZS-91ko6uaVhhq" target="_blank">
-    <svg width="24" fill="white" viewBox="0 0 24 24"><path d="M16.8 2h3.3c.1 1 .5 2 1.1 2.8.7.9 1.6 1.6 2.7 2v3.4c-1.4-.1-2.7-.5-4-1.2v7.4a7.7 7.7 0 1 1-6.8-7.7v3.4a3.4 3.4 0 1 0 2.4 3.2V2Z"/></svg>
-    TikTok
-  </a>
-
-  <a class="social-btn" href="https://youtube.com/@the-nuxoffc?si=A2STRJ3X91Vc0QNf" target="_blank">
-    <svg width="24" fill="white" viewBox="0 0 24 24"><path d="M19.6 3.2H4.4A4.4 4.4 0 0 0 0 7.6v8.8a4.4 4.4 0 0 0 4.4 4.4h15.2a4.4 4.4 0 0 0 4.4-4.4V7.6a4.4 4.4 0 0 0-4.4-4.4ZM9.6 15.8V8.2l6.4 3.8-6.4 3.8Z"/></svg>
-    YouTube
-  </a>
-
-  <a class="social-btn" href="https://www.instagram.com/ibnurifah2008?igsh=eHhveW4wbTc0bzE2" target="_blank">
-    <svg width="24" fill="white" viewBox="0 0 24 24"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm5 5.2A4.8 4.8 0 1 0 16.8 12 4.8 4.8 0 0 0 12 7.2Zm6.2-.9a1.3 1.3 0 1 0-1.3-1.3 1.3 1.3 0 0 0 1.3 1.3Z"/><circle cx="12" cy="12" r="3.8"/></svg>
-    Instagram
-  </a>
+<!-- Drawer -->
+<div id="drawer" class="drawer">
+  <h4 class="text-white mb-3">Kontak Admin</h4>
+  <a class="social-btn mb-2" href="https://wa.me/6283840810226" target="_blank">Hubungi WhatsApp Admin</a>
 </div>
 
-<div class="container">
-
-  <!-- ganti music disini -->
-<div id="musicPlayer">
-  <button id="playBtn">
-    <svg id="playIcon" viewBox="0 0 24 24">
-      <path d="M8 5v14l11-7z"></path>
-    </svg>
-
-    <svg id="pauseIcon" viewBox="0 0 24 24" style="display:none;">
-      <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"></path>
-    </svg>
-  </button>
-
-  <div id="progressBar">
-    <div id="progressFill"></div>
-  </div>
-
-  <span id="musicTitle">Rewrite The Stars</span>
-
-  <audio id="audio" src="https://c.termai.cc/a94/fJbu.mp3"></audio>
-</div>
-
-  <main>
-    <div class="list" id="productList"></div>
-  </main>
-</div>
-
-<footer>© 2025 Pungg Official | Pungg Market</footer>
-
-<div class="modal-backdrop" id="modalBackdrop">
-  <div class="modal">
-    <div style="display:flex;justify-content:space-between;align-items:center;">
-      <h3>Pembayaran</h3>
-      <div class="close" id="closeModal">✕</div>
-    </div>
-
-    <img id="qrisImage" class="qris" src=""/>
-    <div id="payInfo" style="margin-top:10px;color:var(--muted);font-size:14px;"></div>
-
-    <div class="modal-footer">
-      <a id="waLink" class="wa-btn" href="#" target="_blank">Hubungi Admin</a>
-      <div class="close" id="modalCloseBtn">Tutup</div>
+<!-- Modal Pembayaran -->
+<div class="modal fade" id="payModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-dark text-white">
+      <div class="modal-header"><h5 id="payTitle"></h5></div>
+      <div class="modal-body">
+        <p>Silahkan scan QRIS untuk melakukan pembayaran:</p>
+        <img id="qrisImg" class="w-100 rounded mb-3">
+        <p class="text-warning">Setelah transfer, klik tombol di bawah untuk kirim bukti ke admin.</p>
+      </div>
+      <div class="modal-footer">
+        <a id="waLink" class="btn btn-success w-100" target="_blank">Kirim Bukti ke WhatsApp</a>
+      </div>
     </div>
   </div>
 </div>
 
 <script>
+function toggleDrawer(){ document.getElementById("drawer").classList.toggle("open"); }
 
-const text = "WELCOME TO IPUNGG SHOP";
-const container = document.getElementById("typingText");
-let idx = 0;
-
-function typeEffect(){
-  if(idx < text.length){
-    container.textContent += text.charAt(idx);
-    idx++;
-    setTimeout(typeEffect, 55);
-  }
-}
-typeEffect();
-
-
-document.getElementById("nextBtn").onclick = () => {
-  document.getElementById("welcome").style.opacity = "0";
-  setTimeout(()=>{ document.getElementById("welcome").style.display = "none"; },300);
-};
-
-
-const audio = document.getElementById("audio");
-const playBtn = document.getElementById("playBtn");
-const playIcon = document.getElementById("playIcon");
-const pauseIcon = document.getElementById("pauseIcon");
-const progressBar = document.getElementById("progressBar");
-const progressFill = document.getElementById("progressFill");
-
-playBtn.onclick = () => {
-  if(audio.paused){
-    audio.play();
-    playIcon.style.display = "none";
-    pauseIcon.style.display = "block";
-  } else {
-    audio.pause();
-    playIcon.style.display = "block";
-    pauseIcon.style.display = "none";
-  }
-};
-
-audio.addEventListener("timeupdate", () => {
-  const progress = (audio.currentTime / audio.duration) * 100;
-  progressFill.style.width = progress + "%";
-});
-
-progressBar.onclick = (e) => {
-  const rect = progressBar.getBoundingClientRect();
-  const percent = (e.clientX - rect.left) / rect.width;
-  audio.currentTime = audio.duration * percent;
-};
-
-
-const imgNew = "https://img1.pixhost.to/images/10625/667739138_ipungg-md.jpg";
+// GAMBAR PRODUK FINAL + PRODUK LIST
+const imgNew = "https://img1.pixhost.to/images/10698/668955099_lyrra-md.jpg";
 
 const products = [
-  {id:1, name:'PANEL RAM 1GB', price:1000, desc:'', img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
-  {id:2, name:'PANEL RAM 2GB', price:2000, desc:'', img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
-  {id:3, name:'PANEL RAM 3GB', price:3000, desc:'', img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
-  {id:4, name:'PANEL RAM 4GB', price:4000, desc:'', img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
-  {id:5, name:'PANEL RAM 5GB', price:5000, desc:'', img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
-  {id:6, name:'PANEL RAM 6GB', price:6000, desc:'', img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
-  {id:7, name:'PANEL RAM 7GB', price:7000, desc:'', img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
-  {id:8, name:'PANEL RAM 8GB', price:8000, desc:'', img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
-  {id:9, name:'PANEL RAM 9GB', price:9000, desc:'', img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
-  {id:10, name:'PANEL RAM UNLIMITED', price:10000, desc:'', img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
+  {id:1, name:'PANEL RAM 1GB', price:1000, img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
+  {id:2, name:'PANEL RAM 2GB', price:2000, img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
+  {id:3, name:'PANEL RAM 3GB', price:3000, img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
+  {id:4, name:'PANEL RAM 4GB', price:4000, img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
+  {id:5, name:'PANEL RAM 5GB', price:5000, img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
+  {id:6, name:'PANEL RAM 6GB', price:6000, img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
+  {id:7, name:'PANEL RAM 7GB', price:7000, img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
+  {id:8, name:'PANEL RAM 8GB', price:8000, img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
+  {id:9, name:'PANEL RAM 9GB', price:9000, img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
+  {id:10, name:'PANEL RAM UNLIMITED', price:10000, img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
 ];
 
-const productList = document.getElementById('productList');
-const modal = document.getElementById('modalBackdrop');
-const qrisImage = document.getElementById('qrisImage');
-const payInfo = document.getElementById('payInfo');
-const waLink = document.getElementById('waLink');
-
-function formatRupiah(n){
-  return 'Rp ' + n.toString().replace(/\B(?=(\d{3})+(?!\d))/g,'.');
-}
-
-function renderProducts(){
-  products.forEach(p=>{
-    const el=document.createElement('div');
-    el.className='card';
-    el.innerHTML=`
-      <img class="thumb" src="${p.img}">
-      <div class="title">${p.name}</div>
-      <div class="desc">${p.desc}</div>
-      <div class="price">${formatRupiah(p.price)}</div>
-      <button class="btn" data-id="${p.id}">Beli Sekarang</button>
-    `;
-    productList.appendChild(el);
-  });
-  observeCards();
-}
-
-function observeCards(){
-  const observer=new IntersectionObserver(entries=>{
-    entries.forEach(entry=>{
-      if(entry.isIntersecting) entry.target.classList.add('visible');
-    });
-  },{threshold:.2});
-  document.querySelectorAll('.card').forEach(c=>observer.observe(c));
-}
-
-function openModal(id){
-  const p=products.find(x=>x.id===id);
-  qrisImage.src=p.qris;
-  payInfo.textContent=`${p.name} — ${formatRupiah(p.price)}`;
-  waLink.href=`https://wa.me/6285817240944?text=${encodeURIComponent("MIN SAYA MAU KIRIM BUKTI TRANSFER UNTUK PEMBELIAN "+p.name)}`;
-  modal.style.display='flex';
-}
-
-function closeM(){
-  modal.style.display='none';
-  qrisImage.src='';
-}
-
-document.addEventListener('click',e=>{
-  if(e.target.matches('.btn')) openModal(Number(e.target.dataset.id));
-  if(e.target===modal) closeM();
+const box = document.getElementById("productList");
+products.forEach(p=>{
+  box.innerHTML+=`
+  <div class="col-6 col-md-3 mb-4">
+    <div class="card p-2 text-center">
+      <img src="${p.img}" class="w-100 rounded mb-2">
+      <h6>${p.name}</h6>
+      <p class="text-success fw-bold">Rp ${p.price.toLocaleString()}</p>
+      <button class="btn btn-primary w-100" onclick="pay(${p.id})">Beli</button>
+    </div>
+  </div>`;
 });
 
-document.getElementById("closeModal").onclick = closeM;
-document.getElementById("modalCloseBtn").onclick = closeM;
-
-renderProducts();
+function pay(id){
+  const p = products.find(x=>x.id===id);
+  document.getElementById("payTitle").innerHTML = p.name;
+  document.getElementById("qrisImg").src = p.qris;
+  const waLink = document.getElementById("waLink");
+  waLink.href = `https://wa.me/6283840810226?text=${encodeURIComponent("MIN SAYA MAU KIRIM BUKTI TRANSFER UNTUK PEMBELIAN "+p.name)}`;
+  new bootstrap.Modal(document.getElementById("payModal")).show();
+}
 </script>
 
-<script>
-document.getElementById("openDrawer").onclick=()=>{document.getElementById("drawer").classList.add("open");}
-document.getElementById("closeDrawer").onclick=()=>{document.getElementById("drawer").classList.remove("open");}
-</script>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
