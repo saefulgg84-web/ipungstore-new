@@ -8,11 +8,12 @@
 <style>
 body { background: #111; color: white; }
 .card { background: #1c1c1c; border: 1px solid #333; }
-.drawer { position: fixed; top: 0; right: -320px; width: 320px; height: 100%; background:#181818; padding:20px; transition:.4s; z-index:999; }
+.drawer { position: fixed; top: 0; right: -310px; width: 310px; height: 100%; background:#181818; padding:20px; transition:.4s; z-index:999; }
 .drawer.open { right: 0; }
-.social-btn { display:block; padding:12px; border-radius:8px; color:white; text-align:center; text-decoration:none; }
-.logo-box { text-align:center; margin-top:15px; }
-.logo-box img { width:70%; border-radius:10px; }
+.drawer a { display:block; padding:12px; border-radius:7px; margin-bottom:10px; text-decoration:none; color:white; }
+.social-wa { background:#25D366; }
+.social-tg { background:#1D9BF0; }
+.logo-welcome { width:110px; border-radius:12px; margin-bottom:10px; }
 </style>
 </head>
 <body>
@@ -22,36 +23,32 @@ body { background: #111; color: white; }
   <button class="btn btn-outline-light" onclick="toggleDrawer()">⋮</button>
 </nav>
 
+<!-- Sambutan -->
 <div class="container">
-  <!-- Logo -->
-  <div class="logo-box">
-    <img src="https://img1.pixhost.to/images/10698/668959036_lyrra-md.jpg">
+  <div class="text-center mt-3 mb-4 p-3" style="background:#181818; border:1px solid #333; border-radius:10px;">
+    <img src="https://img1.pixhost.to/images/10698/668959036_lyrra-md.jpg" class="logo-welcome">
+    <h4 class="fw-bold">Selamat Datang di TOKO PANEL IPUNGG</h4>
+    <p class="text-white-50 mb-0">Silakan pilih panel sesuai kebutuhan Anda. Pembayaran otomatis melalui QRIS.</p>
   </div>
 
-  <div class="row mt-4" id="productList"></div>
+  <div class="row" id="productList"></div>
 </div>
 
 <!-- Drawer -->
 <div id="drawer" class="drawer">
-  <h4 class="text-white mb-3">Bantuan Admin</h4>
-  <a class="social-btn mb-2" style="background:#25D366;" href="https://wa.me/6283840810226" target="_blank">
-    📱 WhatsApp Admin
-  </a>
-  <a class="social-btn mb-2" style="background:#0088cc;" href="https://t.me/ipung_brye" target="_blank">
-    🚀 Telegram Admin
-  </a>
+  <h4 class="text-white mb-3">Pusat Bantuan</h4>
+  <a class="social-wa" href="https://wa.me/6283840810226" target="_blank">💬 WhatsApp Admin</a>
+  <a class="social-tg" href="https://t.me/ipung_brye" target="_blank">📨 Telegram Admin</a>
 </div>
 
-<!-- Modal Pilihan Pembayaran -->
+<!-- Modal Pilihan Bayar -->
 <div class="modal fade" id="payChoice" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content bg-dark text-white">
-      <div class="modal-header">
-        <h5 id="choiceTitle"></h5>
-      </div>
+    <div class="modal-content bg-dark text-white text-center">
+      <div class="modal-header"><h5 class="modal-title">Pilih Metode Pembayaran</h5></div>
       <div class="modal-body">
-        <button class="btn btn-warning mb-2 w-100" id="btnQris">Bayar via QRIS</button>
-        <button class="btn btn-success w-100" id="btnWa">Bayar via WhatsApp</button>
+        <button class="btn btn-primary w-100 mb-2" onclick="openQris()">💳 Bayar QRIS</button>
+        <a id="payVa" class="btn btn-success w-100">🏧 Transfer Manual & Chat Admin</a>
       </div>
     </div>
   </div>
@@ -61,14 +58,14 @@ body { background: #111; color: white; }
 <div class="modal fade" id="qrisModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content bg-dark text-white">
-      <div class="modal-header"><h5 id="qrisTitle"></h5></div>
+      <div class="modal-header"><h5 id="payTitle"></h5></div>
       <div class="modal-body">
-        <p>Silahkan scan QRIS untuk melakukan pembayaran:</p>
+        <p>Scan QRIS untuk pembayaran:</p>
         <img id="qrisImg" class="w-100 rounded mb-3">
-        <p class="text-warning">Setelah transfer, klik tombol kirim bukti di bawah.</p>
+        <p class="text-warning mb-0">Setelah bayar, klik tombol WhatsApp di bawah.</p>
       </div>
       <div class="modal-footer">
-        <a id="waLinkQris" class="btn btn-success w-100" target="_blank">Kirim Bukti ke WhatsApp</a>
+        <a id="waLink" class="btn btn-success w-100" target="_blank">Kirim Bukti ke WhatsApp</a>
       </div>
     </div>
   </div>
@@ -77,63 +74,57 @@ body { background: #111; color: white; }
 <script>
 function toggleDrawer(){ document.getElementById("drawer").classList.toggle("open"); }
 
+// produk list + gambar final
 const imgNew = "https://img1.pixhost.to/images/10698/668955099_lyrra-md.jpg";
-const qrisImg = "https://img1.pixhost.to/images/10697/668950921_lyrra-md.png";
 
 const products = [
-  {id:1, name:'PANEL RAM 1GB', price:1000, img:imgNew, qris:qrisImg},
-  {id:2, name:'PANEL RAM 2GB', price:2000, img:imgNew, qris:qrisImg},
-  {id:3, name:'PANEL RAM 3GB', price:3000, img:imgNew, qris:qrisImg},
-  {id:4, name:'PANEL RAM 4GB', price:4000, img:imgNew, qris:qrisImg},
-  {id:5, name:'PANEL RAM 5GB', price:5000, img:imgNew, qris:qrisImg},
-  {id:6, name:'PANEL RAM 6GB', price:6000, img:imgNew, qris:qrisImg},
-  {id:7, name:'PANEL RAM 7GB', price:7000, img:imgNew, qris:qrisImg},
-  {id:8, name:'PANEL RAM 8GB', price:8000, img:imgNew, qris:qrisImg},
-  {id:9, name:'PANEL RAM 9GB', price:9000, img:imgNew, qris:qrisImg},
-  {id:10, name:'UNLIMITED RAM', price:10000, img:imgNew, qris:qrisImg},
+  {id:1, name:'PANEL RAM 1GB', price:1000},
+  {id:2, name:'PANEL RAM 2GB', price:2000},
+  {id:3, name:'PANEL RAM 3GB', price:3000},
+  {id:4, name:'PANEL RAM 4GB', price:4000},
+  {id:5, name:'PANEL RAM 5GB', price:5000},
+  {id:6, name:'PANEL RAM 6GB', price:6000},
+  {id:7, name:'PANEL RAM 7GB', price:7000},
+  {id:8, name:'PANEL RAM 8GB', price:8000},
+  {id:9, name:'PANEL RAM 9GB', price:9000},
+  {id:10, name:'PANEL RAM UNLIMITED', price:10000},
 ];
+
+const qrisImgUrl = "https://img1.pixhost.to/images/10697/668950921_lyrra-md.png";
 
 const box = document.getElementById("productList");
 products.forEach(p=>{
-  box.innerHTML+=`
-  <div class="col-6 col-md-3 mb-4">
-    <div class="card p-2 text-center">
-      <img src="${p.img}" class="w-100 rounded mb-2">
-      <h6>${p.name}</h6>
-      <p class="text-success fw-bold">Rp ${p.price.toLocaleString()}</p>
-      <button class="btn btn-primary w-100" onclick="buy(${p.id})">Beli</button>
-    </div>
-  </div>`;
+  box.innerHTML += `
+    <div class="col-6 col-md-3 mb-4">
+      <div class="card p-2 text-center">
+        <img src="${imgNew}" class="w-100 rounded mb-2">
+        <h6>${p.name}</h6>
+        <p class="text-success fw-bold">Rp ${p.price.toLocaleString()}</p>
+        <button class="btn btn-primary w-100" onclick="pay(${p.id})">Beli</button>
+      </div>
+    </div>`;
 });
 
-let selected;
-function buy(id){
-  selected = products.find(x=>x.id===id);
-  document.getElementById("choiceTitle").innerHTML = selected.name;
+let selectedProduct = null;
+function pay(id){
+  selectedProduct = products.find(x => x.id === id);
+  document.getElementById("payVa").href = "https://wa.me/6283840810226?text=" + encodeURIComponent("Halo kak, saya mau beli " + selectedProduct.name);
   new bootstrap.Modal(document.getElementById("payChoice")).show();
 }
 
-document.getElementById("btnQris").onclick = ()=>{
-  document.getElementById("qrisTitle").innerHTML = selected.name;
-  document.getElementById("qrisImg").src = selected.qris;
-  const w = `Halo admin, saya mau order:\n• Produk: ${selected.name}\n• Harga: Rp ${selected.price.toLocaleString()}\n• Metode: QRIS\nBerikut bukti pembayaran saya.`;
-  document.getElementById("waLinkQris").href = `https://wa.me/6283840810226?text=${encodeURIComponent(w)}`;
+function openQris(){
+  document.getElementById("payTitle").innerHTML = selectedProduct.name;
+  document.getElementById("qrisImg").src = qrisImgUrl;
+  document.getElementById("waLink").href = "https://wa.me/6283840810226?text=" + encodeURIComponent("MIN SAYA MAU KIRIM BUKTI UNTUK PEMBELIAN " + selectedProduct.name);
   new bootstrap.Modal(document.getElementById("qrisModal")).show();
-};
+}
 
-document.getElementById("btnWa").onclick = ()=>{
-  const text = `Halo admin, saya mau order:\n• Produk: ${selected.name}\n• Harga: Rp ${selected.price.toLocaleString()}\n• Metode: WhatsApp\nBerikut bukti pembayaran saya.`;
-  const url = `https://wa.me/6283840810226?text=${encodeURIComponent(text)}`;
-  window.open(url, "_blank");
-};
-
-/* 🟢 FIX — Kembali ke dashboard saat modal ditutup */
-document.getElementById("qrisModal").addEventListener("hidden.bs.modal", function () {
-  window.location.hash = "#productList";
-});
-document.getElementById("payChoice").addEventListener("hidden.bs.modal", function () {
-  window.location.hash = "#productList";
-});
+/* 🔥 FIX FINAL — keluar modal = kembali ke dashboard */
+function backToDashboard(){
+  document.getElementById("productList").scrollIntoView({ behavior:"smooth" });
+}
+document.getElementById("payChoice").addEventListener("hidden.bs.modal", backToDashboard);
+document.getElementById("qrisModal").addEventListener("hidden.bs.modal", backToDashboard);
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
