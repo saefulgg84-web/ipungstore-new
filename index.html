@@ -6,66 +6,56 @@
 <title>TOKO PANEL IPUNGG</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 <style>
-body { background:#111; color:white; }
-.card { background:#1c1c1c; border:1px solid #333; }
-.drawer { position:fixed; top:0; right:-310px; width:310px; height:100%; background:#181818; padding:20px; transition:.4s; z-index:999; }
-.drawer.open { right:0; }
-.drawer a{ display:block; padding:12px; border-radius:7px; margin-bottom:10px; text-decoration:none; color:white; }
-.social-wa{ background:#25D366; }
-.social-tg{ background:#1D9BF0; }
-.logo-welcome{ width:110px; border-radius:12px; margin-bottom:10px; }
+body { background: #111; color: white; }
+.card { background: #1c1c1c; border: 1px solid #333; }
+.drawer { position: fixed; top: 0; right: -300px; width: 300px; height: 100%; background:#181818; padding:20px; transition:.4s; z-index:999; }
+.drawer.open { right: 0; }
+.social-btn { display:flex; align-items:center; gap:8px; padding:12px; border-radius:8px; background:#25D366; color:white; text-decoration:none; margin-bottom:10px; }
+.social-btn.tg { background:#2AABEE; }
+.logo-box { text-align:center; margin-top:18px; margin-bottom:18px; }
+.logo-box img { width:70%; border-radius:10px; }
 </style>
 </head>
 <body>
 
-<nav class="navbar bg-dark px-3">
+<nav class="navbar bg-dark px-3 d-flex justify-content-between">
   <span class="navbar-brand text-white fw-bold">TOKO PANEL IPUNGG</span>
   <button class="btn btn-outline-light" onclick="toggleDrawer()">⋮</button>
 </nav>
 
 <div class="container">
-  <div class="text-center mt-3 mb-4 p-3" style="background:#181818; border:1px solid #333; border-radius:10px;">
-    <img src="https://img1.pixhost.to/images/10698/668959036_lyrra-md.jpg" class="logo-welcome">
-    <h4 class="fw-bold">Selamat Datang di TOKO PANEL IPUNGG</h4>
-    <p class="text-white-50 mb-0">Silakan pilih panel sesuai kebutuhan Anda. Pembayaran otomatis melalui QRIS.</p>
+
+  <!-- LOGO -->
+  <div class="logo-box">
+    <img src="https://img1.pixhost.to/images/10698/668959036_lyrra-md.jpg">
   </div>
 
-  <div class="row" id="productList"></div>
+  <div class="row mt-4" id="productList"></div>
 </div>
 
 <!-- Drawer -->
 <div id="drawer" class="drawer">
-  <h4 class="text-white mb-3">Pusat Bantuan</h4>
-  <a class="social-wa" href="https://wa.me/6283840810226" target="_blank">💬 WhatsApp Admin</a>
-  <a class="social-tg" href="https://t.me/ipung_brye" target="_blank">📨 Telegram Admin</a>
+  <h4 class="text-white mb-3">Bantuan Admin</h4>
+  <a class="social-btn" href="https://wa.me/6283840810226" target="_blank">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="22"> WhatsApp Admin
+  </a>
+  <a class="social-btn tg" href="https://t.me/ipung_brye" target="_blank">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" width="22"> Telegram Admin
+  </a>
 </div>
 
-<!-- Modal Pilihan Pembayaran -->
-<div class="modal fade" id="payChoice" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content bg-dark text-white text-center">
-      <div class="modal-header"><h5>Pilih Metode Pembayaran</h5></div>
-      <div class="modal-body">
-        <button class="btn btn-primary w-100 mb-2" onclick="openQris()">💳 Bayar QRIS</button>
-        <a id="payVa" class="btn btn-success w-100">🏧 Transfer Manual & Chat Admin</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal QRIS -->
-<div class="modal fade" id="qrisModal" tabindex="-1">
+<!-- Modal Pembayaran -->
+<div class="modal fade" id="payModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content bg-dark text-white">
       <div class="modal-header"><h5 id="payTitle"></h5></div>
-      <div class="modal-body text-center">
+      <div class="modal-body">
         <p>Silahkan scan QRIS untuk melakukan pembayaran:</p>
         <img id="qrisImg" class="w-100 rounded mb-3">
-        <p class="text-warning">Setelah transfer, klik tombol di bawah.</p>
+        <p class="text-warning">Setelah transfer, klik tombol di bawah untuk kirim bukti ke admin.</p>
       </div>
       <div class="modal-footer d-grid gap-2">
-        <button id="confirmPay" class="btn btn-warning w-100">Saya Sudah Transfer</button>
-        <a id="waLink" class="btn btn-outline-light w-100" target="_blank">Kirim Bukti ke WhatsApp</a>
+        <a id="waLink" class="btn btn-success w-100" target="_blank">Kirim Bukti via WhatsApp</a>
       </div>
     </div>
   </div>
@@ -74,78 +64,53 @@ body { background:#111; color:white; }
 <script>
 function toggleDrawer(){ document.getElementById("drawer").classList.toggle("open"); }
 
-const imgPanel = "https://img1.pixhost.to/images/10698/668955099_lyrra-md.jpg";
-const qrisImgUrl = "https://img1.pixhost.to/images/10697/668950921_lyrra-md.png";
+const imgNew = "https://img1.pixhost.to/images/10698/668955099_lyrra-md.jpg";
+const qrisImg = "https://img1.pixhost.to/images/10697/668950921_lyrra-md.png";
+const admin = "6283840810226";
+
 const products = [
-  {id:1, name:'PANEL RAM 1GB', price:1000},
-  {id:2, name:'PANEL RAM 2GB', price:2000},
-  {id:3, name:'PANEL RAM 3GB', price:3000},
-  {id:4, name:'PANEL RAM 4GB', price:4000},
-  {id:5, name:'PANEL RAM 5GB', price:5000},
-  {id:6, name:'PANEL RAM 6GB', price:6000},
-  {id:7, name:'PANEL RAM 7GB', price:7000},
-  {id:8, name:'PANEL RAM 8GB', price:8000},
-  {id:9, name:'PANEL RAM 9GB', price:9000},
-  {id:10, name:'PANEL RAM UNLIMITED', price:10000},
+  {id:1, name:'PANEL RAM 1GB', price:1000, img:imgNew, qris:qrisImg},
+  {id:2, name:'PANEL RAM 2GB', price:2000, img:imgNew, qris:qrisImg},
+  {id:3, name:'PANEL RAM 3GB', price:3000, img:imgNew, qris:qrisImg},
+  {id:4, name:'PANEL RAM 4GB', price:4000, img:imgNew, qris:qrisImg},
+  {id:5, name:'PANEL RAM 5GB', price:5000, img:imgNew, qris:qrisImg},
+  {id:6, name:'PANEL RAM 6GB', price:6000, img:imgNew, qris:qrisImg},
+  {id:7, name:'PANEL RAM 7GB', price:7000, img:imgNew, qris:qrisImg},
+  {id:8, name:'PANEL RAM 8GB', price:8000, img:imgNew, qris:qrisImg},
+  {id:9, name:'PANEL RAM 9GB', price:9000, img:imgNew, qris:qrisImg},
+  {id:10, name:'PANEL RAM UNLIMITED', price:10000, img:imgNew, qris:qrisImg},
 ];
 
-let selectedProduct = null;
 const box = document.getElementById("productList");
-
 products.forEach(p=>{
-  box.innerHTML += `
+  box.innerHTML+=`
   <div class="col-6 col-md-3 mb-4">
     <div class="card p-2 text-center">
-      <img src="${imgPanel}" class="w-100 rounded mb-2">
+      <img src="${p.img}" class="w-100 rounded mb-2">
       <h6>${p.name}</h6>
       <p class="text-success fw-bold">Rp ${p.price.toLocaleString()}</p>
-      <button class="btn btn-primary w-100" onclick="pay(${p.id})">Bayar Sekarang</button>
+      <button class="btn btn-primary w-100" onclick="pay(${p.id})">Beli</button>
     </div>
   </div>`;
 });
 
 function pay(id){
-  selectedProduct = products.find(x => x.id === id);
-  document.getElementById("payVa").href = "https://wa.me/6283840810226?text=" + encodeURIComponent("Halo kak, saya mau beli " + selectedProduct.name);
-  new bootstrap.Modal(document.getElementById("payChoice")).show();
+  const p = products.find(x=>x.id===id);
+  document.getElementById("payTitle").innerHTML = p.name;
+  document.getElementById("qrisImg").src = p.qris;
+  document.getElementById("waLink").href =
+    `https://wa.me/${admin}?text=${encodeURIComponent(
+      `Halo admin, saya mau order:\n• Produk: ${p.name}\n• Harga: Rp ${p.price.toLocaleString()}\n• Metode: WhatsApp\nBerikut bukti pembayaran saya.`
+    )}`;
+  new bootstrap.Modal(document.getElementById("payModal")).show();
 }
 
-function openQris(){
-  document.getElementById("payTitle").innerHTML = selectedProduct.name;
-  document.getElementById("qrisImg").src = qrisImgUrl;
-  document.getElementById("waLink").href = "https://wa.me/6283840810226?text=" + encodeURIComponent("MIN, SAYA SUDAH TRANSFER UNTUK " + selectedProduct.name);
-  new bootstrap.Modal(document.getElementById("qrisModal")).show();
-}
-
-/* Popup notifikasi */
-function showPopup(msg, type="info") {
-  let bg = type==="success" ? "#14C85A" : type==="warning" ? "#FF9800" : "#2196F3";
-  const d = document.createElement("div");
-  d.innerHTML = msg;
-  d.style.cssText = `
-    position:fixed; bottom:25px; left:50%; transform:translateX(-50%);
-    background:${bg}; color:#fff; padding:12px 18px; border-radius:8px;
-    font-weight:bold; box-shadow:0 0 10px #000; z-index:999999;
-  `;
-  document.body.appendChild(d);
-  setTimeout(()=> d.remove(), 3000);
-}
-
-document.getElementById("confirmPay").addEventListener("click",()=>{
-  showPopup("⏳ Pembayaran sedang dicek...", "warning");
-  setTimeout(()=>{
-    showPopup("✅ Pembayaran sukses! Panel sedang dibuat...", "success");
-    document.getElementById("waLink").click();
-  },3500);
+// scroll balik ke dashboard kalau modal ditutup
+document.addEventListener("hidden.bs.modal", function () {
+  document.getElementById("productList").scrollIntoView({ behavior:"smooth" });
 });
-
-/* Kembali ke dashboard setiap modal ditutup */
-setInterval(()=>{
-  const openModal = document.querySelector(".modal.show");
-  if(!openModal) document.getElementById("productList").scrollIntoView({ behavior:"smooth" });
-},450);
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-    </html>
+          </html>
