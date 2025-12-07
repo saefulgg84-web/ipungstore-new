@@ -1,115 +1,106 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TOKO PANEL IPUNGG</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-<style>
-body { background: #111; color: white; }
-.card { background: #1c1c1c; border: 1px solid #333; }
-.drawer { position: fixed; top: 0; right: -300px; width: 300px; height: 100%; background:#181818; padding:20px; transition:.4s; z-index:999; }
-.drawer.open { right: 0; }
-.social-btn { display:block; padding:12px; border-radius:8px; background:#25D366; color:white; text-align:center; text-decoration:none; }
-.welcome-box { background:#181818; border:1px solid #333; padding:18px; border-radius:8px; margin-top:18px; }
-.back-btn { background:#444; border:1px solid #666; }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TOKO PANEL IPUNGG</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" />
 </head>
-<body>
+<body class="bg-gray-900 text-white">
+  <header class="bg-gray-800 p-5 flex justify-between items-center">
+    <h1 class="text-xl font-bold">TOKO PANEL IPUNGG</h1>
+    <button onclick="window.location.href='dashboard.html'" class="bg-gray-700 p-2 rounded">
+      <span class="text-2xl">☰</span>
+    </button>
+  </header>
 
-<nav class="navbar bg-dark px-3">
-  <span class="navbar-brand text-white fw-bold">TOKO PANEL IPUNGG</span>
-  <button class="btn btn-outline-light" onclick="toggleDrawer()">≡</button>
-</nav>
-
-<div class="container">
-
-  <!-- 🌟 SAMBUTAN -->
-  <div class="welcome-box text-center mt-3 mb-4">
-    <h4 class="fw-bold">👋 Selamat Datang di TOKO PANEL IPUNGG</h4>
-    <p class="text-white-50 mb-0">Silahkan pilih panel sesuai kebutuhan Anda. Pembayaran cepat & otomatis melalui QRIS.</p>
+  <!-- LOGO -->
+  <div class="flex justify-center mt-5 mb-6">
+    <img src="https://img1.pixhost.to/images/10698/668959036_lyrra-md.jpg" 
+         alt="Logo Toko Panel" 
+         class="rounded-lg shadow-lg"
+         style="width: 70%; max-width: 380px;">
   </div>
 
-  <div class="row mt-4" id="productList"></div>
-</div>
-
-<!-- Drawer -->
-<div id="drawer" class="drawer">
-  <h4 class="text-white mb-3">Kontak Admin</h4>
-  <a class="social-btn mb-2" href="https://wa.me/6283840810226" target="_blank">Hubungi WhatsApp Admin</a>
-</div>
-
-<!-- Modal Pembayaran -->
-<div class="modal fade" id="payModal" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content bg-dark text-white">
-      <div class="modal-header d-flex justify-content-between">
-        <h5 id="payTitle"></h5>
-        <button class="btn-close btn-close-white" onclick="closePayModal()"></button>
-      </div>
-      <div class="modal-body">
-        <p>Silahkan scan QRIS untuk melakukan pembayaran:</p>
-        <img id="qrisImg" class="w-100 rounded mb-3">
-        <p class="text-warning">Setelah transfer, klik tombol di bawah untuk kirim bukti ke admin.</p>
-      </div>
-      <div class="modal-footer d-flex flex-column gap-2">
-        <a id="waLink" class="btn btn-success w-100" target="_blank">Kirim Bukti ke WhatsApp</a>
-        <button class="btn back-btn w-100" onclick="closePayModal()">Kembali ke Dashboard</button>
-      </div>
+  <!-- PRODUK -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
+    <!-- 1GB -->
+    <div class="bg-gray-800 p-4 rounded-lg text-center shadow">
+      <img src="https://img1.pixhost.to/images/10698/668955099_lyrra-md.jpg" class="rounded-xl mb-3 mx-auto">
+      <h2 class="font-bold mb-1">PANEL RAM 1 GB</h2>
+      <p class="text-green-400 font-bold mb-3">Rp 1.000</p>
+      <button onclick="beli(1000)" class="bg-blue-600 w-full py-2 rounded-lg font-bold">Beli</button>
+    </div>
+    <!-- 2GB -->
+    <div class="bg-gray-800 p-4 rounded-lg text-center shadow">
+      <img src="https://img1.pixhost.to/images/10698/668955099_lyrra-md.jpg" class="rounded-xl mb-3 mx-auto">
+      <h2 class="font-bold mb-1">PANEL RAM 2 GB</h2>
+      <p class="text-green-400 font-bold mb-3">Rp 2.000</p>
+      <button onclick="beli(2000)" class="bg-blue-600 w-full py-2 rounded-lg font-bold">Beli</button>
+    </div>
+    <!-- 3GB -->
+    <div class="bg-gray-800 p-4 rounded-lg text-center shadow">
+      <img src="https://img1.pixhost.to/images/10698/668955099_lyrra-md.jpg" class="rounded-xl mb-3 mx-auto">
+      <h2 class="font-bold mb-1">PANEL RAM 3 GB</h2>
+      <p class="text-green-400 font-bold mb-3">Rp 3.000</p>
+      <button onclick="beli(3000)" class="bg-blue-600 w-full py-2 rounded-lg font-bold">Beli</button>
+    </div>
+    <!-- 4GB -->
+    <div class="bg-gray-800 p-4 rounded-lg text-center shadow">
+      <img src="https://img1.pixhost.to/images/10698/668955099_lyrra-md.jpg" class="rounded-xl mb-3 mx-auto">
+      <h2 class="font-bold mb-1">PANEL RAM 4 GB</h2>
+      <p class="text-green-400 font-bold mb-3">Rp 4.000</p>
+      <button onclick="beli(4000)" class="bg-blue-600 w-full py-2 rounded-lg font-bold">Beli</button>
+    </div>
+    <!-- 5GB -->
+    <div class="bg-gray-800 p-4 rounded-lg text-center shadow">
+      <img src="https://img1.pixhost.to/images/10698/668955099_lyrra-md.jpg" class="rounded-xl mb-3 mx-auto">
+      <h2 class="font-bold mb-1">PANEL RAM 5 GB</h2>
+      <p class="text-green-400 font-bold mb-3">Rp 5.000</p>
+      <button onclick="beli(5000)" class="bg-blue-600 w-full py-2 rounded-lg font-bold">Beli</button>
+    </div>
+    <!-- 6GB -->
+    <div class="bg-gray-800 p-4 rounded-lg text-center shadow">
+      <img src="https://img1.pixhost.to/images/10698/668955099_lyrra-md.jpg" class="rounded-xl mb-3 mx-auto">
+      <h2 class="font-bold mb-1">PANEL RAM 6 GB</h2>
+      <p class="text-green-400 font-bold mb-3">Rp 6.000</p>
+      <button onclick="beli(6000)" class="bg-blue-600 w-full py-2 rounded-lg font-bold">Beli</button>
+    </div>
+    <!-- 7GB -->
+    <div class="bg-gray-800 p-4 rounded-lg text-center shadow">
+      <img src="https://img1.pixhost.to/images/10698/668955099_lyrra-md.jpg" class="rounded-xl mb-3 mx-auto">
+      <h2 class="font-bold mb-1">PANEL RAM 7 GB</h2>
+      <p class="text-green-400 font-bold mb-3">Rp 7.000</p>
+      <button onclick="beli(7000)" class="bg-blue-600 w-full py-2 rounded-lg font-bold">Beli</button>
+    </div>
+    <!-- 8GB -->
+    <div class="bg-gray-800 p-4 rounded-lg text-center shadow">
+      <img src="https://img1.pixhost.to/images/10698/668955099_lyrra-md.jpg" class="rounded-xl mb-3 mx-auto">
+      <h2 class="font-bold mb-1">PANEL RAM 8 GB</h2>
+      <p class="text-green-400 font-bold mb-3">Rp 8.000</p>
+      <button onclick="beli(8000)" class="bg-blue-600 w-full py-2 rounded-lg font-bold">Beli</button>
+    </div>
+    <!-- 9GB -->
+    <div class="bg-gray-800 p-4 rounded-lg text-center shadow">
+      <img src="https://img1.pixhost.to/images/10698/668955099_lyrra-md.jpg" class="rounded-xl mb-3 mx-auto">
+      <h2 class="font-bold mb-1">PANEL RAM 9 GB</h2>
+      <p class="text-green-400 font-bold mb-3">Rp 9.000</p>
+      <button onclick="beli(9000)" class="bg-blue-600 w-full py-2 rounded-lg font-bold">Beli</button>
+    </div>
+    <!-- Unlimited -->
+    <div class="bg-gray-800 p-4 rounded-lg text-center shadow">
+      <img src="https://img1.pixhost.to/images/10698/668955099_lyrra-md.jpg" class="rounded-xl mb-3 mx-auto">
+      <h2 class="font-bold mb-1">UNLIMITED RAM</h2>
+      <p class="text-green-400 font-bold mb-3">Rp 10.000</p>
+      <button onclick="beli(10000)" class="bg-blue-600 w-full py-2 rounded-lg font-bold">Beli</button>
     </div>
   </div>
-</div>
 
 <script>
-function toggleDrawer(){
-  document.getElementById("drawer").classList.toggle("open");
-}
-
-// GAMBAR PRODUK + LIST PRODUK FINAL
-const imgNew = "https://img1.pixhost.to/images/10698/668955099_lyrra-md.jpg";
-
-const products = [
-  {id:1, name:'PANEL RAM 1 GB', price:1000, img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
-  {id:2, name:'PANEL RAM 2 GB', price:2000, img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
-  {id:3, name:'PANEL RAM 3 GB', price:3000, img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
-  {id:4, name:'PANEL RAM 4 GB', price:4000, img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
-  {id:5, name:'PANEL RAM 5 GB', price:5000, img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
-  {id:6, name:'PANEL RAM 6 GB', price:6000, img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
-  {id:7, name:'PANEL RAM 7 GB', price:7000, img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
-  {id:8, name:'PANEL RAM 8 GB', price:8000, img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
-  {id:9, name:'PANEL RAM 9 GB', price:9000, img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
-  {id:11, name:'UNLIMITED RAM', price:10000, img:imgNew, qris:'https://img1.pixhost.to/images/10697/668950921_lyrra-md.png'},
-];
-
-const box = document.getElementById("productList");
-products.forEach(p=>{
-  box.innerHTML+=`
-  <div class="col-6 col-md-3 mb-4">
-    <div class="card p-2 text-center">
-      <img src="${p.img}" class="w-100 rounded mb-2">
-      <h6>${p.name}</h6>
-      <p class="text-success fw-bold">Rp ${p.price.toLocaleString()}</p>
-      <button class="btn btn-primary w-100" onclick="pay(${p.id})">Beli</button>
-    </div>
-  </div>`;
-});
-
-function pay(id){
-  const p = products.find(x=>x.id===id);
-  document.getElementById("payTitle").innerHTML = p.name;
-  document.getElementById("qrisImg").src = p.qris;
-  document.getElementById("waLink").href = 
-    `https://wa.me/6283840810226?text=${encodeURIComponent("MIN SAYA MAU KIRIM BUKTI TRANSFER UNTUK PEMBELIAN "+p.name)}`;
-  new bootstrap.Modal(document.getElementById("payModal")).show();
-}
-
-// 🔥 tombol kembali ke dashboard (tidak logout)
-function closePayModal(){
-  const modal = bootstrap.Modal.getInstance(document.getElementById("payModal"));
-  modal.hide();
-}
+  function beli(harga) {
+    window.location.href = `checkout.html?harga=${harga}`;
+  }
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-</html>
+        </html>
